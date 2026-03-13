@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اسلامی قانونِ وراثت</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@700&family=Lora:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand-light: #f5e6c8;
+    --sand-mid:   #d9c49a;
+    --sand-dark:  #b89a6a;
+    --sand-deep:  #8b6914;
+    --ox-brown:   #5c2d0a;
+    --ox-dark:    #3a1a05;
+    --ox-mid:     #7a3f10;
+    --ink:        #1a0e05;
+    --gold:       #c9941a;
+    --gold-light: #e8c05a;
+    --cream:      #faf3e0;
+    --parchment:  #f0deb8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Amiri', serif;
+    background-color: var(--ox-dark);
+    background-image:
+      radial-gradient(ellipse at 20% 20%, #5c2d0a55 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, #3a1a0544 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9941a' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    color: var(--sand-light);
+    min-height: 100vh;
+    direction: rtl;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: linear-gradient(180deg, var(--ox-dark) 0%, var(--ox-brown) 60%, var(--ox-mid) 100%);
+    border-bottom: 3px solid var(--gold);
+    padding: 36px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 30px,
+      rgba(201,148,26,0.03) 30px, rgba(201,148,26,0.03) 31px
+    );
+  }
+  .bismillah {
+    font-size: 28px;
+    color: var(--gold-light);
+    letter-spacing: 4px;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 12px rgba(201,148,26,0.5);
+    animation: fadeDown 1s ease both;
+  }
+  .main-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--cream);
+    text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+    margin-bottom: 6px;
+    animation: fadeDown 1s 0.15s ease both;
+  }
+  .sub-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 11px;
+    color: var(--sand-mid);
+    letter-spacing: 2px;
+    animation: fadeDown 1s 0.3s ease both;
+  }
+  .gold-rule {
+    width: 200px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 14px auto 0;
+    animation: fadeIn 1.2s 0.5s ease both;
+  }
+
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
+
+  /* ── NAV TABS ── */
+  .nav-wrap {
+    background: var(--ox-dark);
+    border-bottom: 2px solid rgba(201,148,26,0.3);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    padding: 0 12px;
+    display: flex;
+    gap: 4px;
+  }
+  .nav-wrap::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    display: inline-block;
+    padding: 12px 16px;
+    font-family: 'Amiri', serif;
+    font-size: 13px;
+    color: var(--sand-dark);
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .tab-btn:hover { color: var(--gold-light); border-bottom-color: rgba(201,148,26,0.4); }
+  .tab-btn.active { color: var(--gold-light); border-bottom-color: var(--gold); background: rgba(201,148,26,0.08); }
+
+  /* ── MAIN LAYOUT ── */
+  .content-area {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  /* ── SECTION CARD ── */
+  .section-panel { display: none; animation: panelIn 0.4s ease; }
+  .section-panel.active { display: block; }
+  @keyframes panelIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+  .section-header {
+    background: linear-gradient(135deg, var(--ox-brown), var(--ox-dark));
+    border: 1px solid var(--gold);
+    border-radius: 10px 10px 0 0;
+    padding: 18px 22px 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: none;
+  }
+  .section-icon { font-size: 28px; flex-shrink: 0; }
+  .section-title-ur { font-size: 20px; color: var(--cream); font-weight: 700; }
+  .section-title-en { font-family: 'Lora', serif; font-size: 11px; color: var(--sand-dark); letter-spacing: 1px; margin-top: 2px; }
+
+  /* ── PARCHMENT CARD ── */
+  .parchment {
+    background:
+      linear-gradient(160deg, #f5e6c8 0%, #eddcaf 40%, #e5d09e 100%);
+    border: 1px solid var(--sand-dark);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    color: var(--ink);
+    padding: 22px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .parchment::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+    pointer-events: none; opacity: 0.5;
+  }
+
+  /* ── INTRO RULES ── */
+  .rule-item {
+    background: rgba(139,105,20,0.1);
+    border: 1px solid rgba(139,105,20,0.3);
+    border-right: 4px solid var(--gold);
+    border-radius: 6px;
+    padding: 13px 16px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--ink);
+  }
+  .rule-item .en {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    color: var(--ox-mid);
+    margin-top: 4px;
+    text-align: left;
+    direction: ltr;
+  }
+
+  /* ── TABLE ── */
+  .inherit-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 6px;
+  }
+  .inherit-table thead tr {
+    background: linear-gradient(90deg, var(--ox-brown), var(--ox-mid));
+    color: var(--gold-light);
+  }
+  .inherit-table thead th {
+    padding: 11px 14px;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: right;
+    border: 1px solid rgba(201,148,26,0.3);
+  }
+  .inherit-table thead th:nth-child(2) { text-align: center; }
+  .inherit-table tbody tr { transition: background 0.15s; }
+  .inherit-table tbody tr:nth-child(odd)  { background: rgba(139,105,20,0.08); }
+  .inherit-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.15); }
+  .inherit-table tbody tr:hover           { background: rgba(201,148,26,0.15); }
+  .inherit-table td {
+    padding: 10px 14px;
+    border: 1px solid rgba(139,105,20,0.2);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .inherit-table td:nth-child(2) { text-align: center; }
+
+  /* ── FRACTION BADGES ── */
+  .badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+  .b-eighth  { background: #c0392b; }
+  .b-quarter { background: #d35400; }
+  .b-half    { background: #27ae60; }
+  .b-two3    { background: #1a6ea8; }
+  .b-third   { background: #7d3c98; }
+  .b-sixth   { background: #148f77; }
+  .b-double  { background: #5c2d0a; }
+  .b-all     { background: #1a1a1a; }
+  .b-rest    { background: #6e6e6e; }
+  .b-special { background: #8b6914; }
+
+  /* ── NOTES ── */
+  .notes-title {
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    color: var(--ox-mid);
+    letter-spacing: 1px;
+    margin: 18px 0 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed var(--sand-dark);
+    text-align: left;
+    direction: ltr;
+  }
+  .note-item {
+    background: rgba(92,45,10,0.08);
+    border: 1px solid rgba(92,45,10,0.15);
+    border-right: 3px solid var(--ox-mid);
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: var(--ox-dark);
+    line-height: 1.7;
+  }
+
+  /* ── INTRO BADGE BOX ── */
+  .intro-box {
+    background: rgba(92,45,10,0.12);
+    border: 1px solid rgba(139,105,20,0.4);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: var(--ox-dark);
+    font-weight: 600;
+  }
+
+  /* ── QURAN FOOTER ── */
+  .quran-footer {
+    max-width: 960px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+  }
+  .quran-card {
+    background: linear-gradient(135deg, var(--ox-brown), var(--ox-dark));
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 22px 28px;
+    text-align: center;
+  }
+  .quran-label {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    color: var(--sand-dark);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+  .quran-arabic {
+    font-size: 20px;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+    line-height: 2;
+  }
+  .quran-ref {
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    color: var(--sand-dark);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .main-title { font-size: 22px; }
+    .parchment { padding: 14px; }
+    .inherit-table { font-size: 12px; }
+    .inherit-table td, .inherit-table th { padding: 7px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="bismillah">﷽</div>
+  <div class="main-title">اسلامی قانونِ وراثت</div>
+  <div class="sub-title">ISLAMIC LAW OF INHERITANCE</div>
+  <div style="font-size:12px;color:var(--sand-dark);margin-top:6px;font-family:'Lora',serif;">
+    Based on Quran ul Hakeem &nbsp;·&nbsp; Surah An-Nisa 4:7, 4:11, 4:12, 4:33, 4:176
+  </div>
+  <div class="gold-rule"></div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap" id="nav">
+  <button class="tab-btn active" onclick="show('intro',this)">⚖️ اصول</button>
+  <button class="tab-btn" onclick="show('husband',this)">👩 بیوی کا حصہ</button>
+  <button class="tab-btn" onclick="show('wife',this)">👨 شوہر کا حصہ</button>
+  <button class="tab-btn" onclick="show('father',this)">👨‍👧‍👦 باپ کی جائیداد</button>
+  <button class="tab-btn" onclick="show('mother',this)">👩‍👧‍👦 ماں کی جائیداد</button>
+  <button class="tab-btn" onclick="show('son',this)">👴 بیٹے کی جائیداد</button>
+  <button class="tab-btn" onclick="show('daughter',this)">👵 بیٹی کی جائیداد</button>
+  <button class="tab-btn" onclick="show('kalalah',this)">🔷 کلالہ</button>
+</div>
+
+<!-- CONTENT -->
+<div class="content-area">
+
+  <!-- INTRO -->
+  <div class="section-panel active" id="intro">
+    <div class="section-header">
+      <div class="section-icon">⚖️</div>
+      <div>
+        <div class="section-title-ur">تقسیمِ جائیداد کے اصول</div>
+        <div class="section-title-en">Fundamental Principles of Distribution</div>
+      </div>
+    </div>
+    <div class="parchment">
+      <div class="rule-item">
+        <strong>١</strong> — جائیداد حقداروں میں متوفی پر واجب الادا <strong>قرض</strong> دینے اور <strong>وصیت</strong> کو پورا کرنے کے بعد تقسیم ہوگی۔
+        <div class="en">Property is distributed after settling debts and fulfilling bequests.</div>
+      </div>
+      <div class="rule-item">
+        <strong>٢</strong> — صاحب جائیداد زندگی میں تقسیم کرے تو پہلے قرض اتارے، وعدے پورے کرے اور تقسیم پر حاضر رشتہ دار، یتیم و مسکین کو کچھ دے۔
+        <div class="en">If dividing during life: pay debts, honour promises, and give to present relatives, orphans and the poor.</div>
+      </div>
+      <div class="rule-item">
+        <strong>٣</strong> — متوفی نے وصیت نہ کی ہو تو قرض کے بعد جائیداد صرف حقدار وارثوں میں تقسیم ہوگی۔
+        <div class="en">If no bequest was left, only legal heirs inherit after debts.</div>
+      </div>
+      <div class="rule-item">
+        <strong>٤</strong> — مرد یا عورت دونوں کی جائیداد میں حقدار: <strong>اولاد، والدین، بیوی/شوہر</strong>۔
+        <div class="en">Eligible heirs for any estate: children, parents, and spouse.</div>
+      </div>
+      <div class="rule-item">
+        <strong>٥</strong> — اگر صاحب جائیداد <strong>کلالہ</strong> ہو (نہ اولاد، نہ والدین، نہ شوہر/بیوی) تو سوتیلے بہن بھائی اور قریبی ضرورت مند رشتہ دار وارث ہونگے۔
+        <div class="en">A kalalah (no child, no parent, no spouse) — step-siblings and needy relatives inherit.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HUSBAND ESTATE → WIFE'S SHARE -->
+  <div class="section-panel" id="husband">
+    <div class="section-header">
+      <div class="section-icon">👩</div>
+      <div>
+        <div class="section-title-ur">شوہر کی جائیداد میں بیوی کا حصہ</div>
+        <div class="section-title-en">Wife's Share in Husband's Estate</div>
+      </div>
+    </div>
+    <div class="parchment">
+      <table class="inherit-table">
+        <thead><tr><th>صورتحال</th><th>بیوی کا حصہ</th><th>باقی جائیداد</th></tr></thead>
+        <tbody>
+          <tr><td>اولاد ہو (لڑکا یا لڑکی)</td><td><span class="badge b-eighth">١/٨</span></td><td>والدین کو ١/٦، باقی اولاد میں</td></tr>
+          <tr><td>صرف لڑکیاں — دو یا زائد</td><td><span class="badge b-eighth">١/٨</span></td><td>لڑکیوں کو ٢/٣، والدین کو ١/٦</td></tr>
+          <tr><td>صرف ایک لڑکی</td><td><span class="badge b-eighth">١/٨</span></td><td>لڑکی کو ١/٢، والدین کو ١/٦</td></tr>
+          <tr><td>اولاد نہ ہو</td><td><span class="badge b-quarter">١/٤</span></td><td>باقی شوہر کے والدین کا</td></tr>
+        </tbody>
+      </table>
+      <div class="notes-title">⚠ Special Conditions</div>
+      <div class="note-item">ایک سے زیادہ بیویاں ہوں تو سب مل کر وہی حصہ برابر بانٹیں گی۔</div>
+      <div class="note-item">اگر بیوہ، تقسیم سے پہلے فوت ہو یا دوسری شادی کر لے تو اسے کوئی حصہ نہیں ملے گا۔</div>
+      <div class="note-item">اگر بیوہ نے حصہ لینے کے بعد شادی کی تو حصہ واپس نہیں لیا جاۓ گا۔</div>
+    </div>
+  </div>
+
+  <!-- WIFE ESTATE → HUSBAND'S SHARE -->
+  <div class="section-panel" id="wife">
+    <div class="section-header">
+      <div class="section-icon">👨</div>
+      <div>
+        <div class="section-title-ur">بیوی کی جائیداد میں شوہر کا حصہ</div>
+        <div class="section-title-en">Husband's Share in Wife's Estate</div>
+      </div>
+    </div>
+    <div class="parchment">
+      <table class="inherit-table">
+        <thead><tr><th>صورتحال</th><th>شوہر کا حصہ</th><th>باقی جائیداد</th></tr></thead>
+        <tbody>
+          <tr><td>اولاد نہ ہو</td><td><span class="badge b-half">١/٢</span></td><td>نصف بیوی کے والدین کا</td></tr>
+          <tr><td>اولاد ہو</td><td><span class="badge b-quarter">١/٤</span></td><td>والدین کو ١/٦، باقی اولاد میں</td></tr>
+          <tr><td>صرف لڑکیاں — دو یا زائد</td><td><span class="badge b-quarter">١/٤</span></td><td>لڑکیوں کو ٢/٣، باقی والدین</td></tr>
+          <tr><td>صرف ایک لڑکی</td><td><span class="badge b-quarter">١/٤</span></td><td>لڑکی کو ١/٢، والدین کو ١/٦</td></tr>
+        </tbody>
+      </table>
+      <div class="notes-title">⚠ Special Conditions</div>
+      <div class="note-item">اگر شوہر، والدین کی جائیداد تقسیم ہونے سے پہلے فوت ہو جاۓ تو اسکا حصہ نہیں نکلے گا۔</div>
+      <div class="note-item">اگر بیوی اپنے والدین کی جائیداد تقسیم سے پہلے فوت ہوئی اور اسکے بچے ہیں تو بیوی کا حصہ نکلے گا اور اس میں شوہر کا ١/٤ حصہ ہوگا۔</div>
+      <div class="note-item">اگر بیوی والدین کی تقسیم سے پہلے فوت ہوئی اور اولاد بھی نہیں ہے تو شوہر کو حصہ نہیں ملے گا۔</div>
+    </div>
+  </div>
+
+  <!-- FATHER ESTATE → CHILDREN -->
+  <div class="section-panel" id="father">
+    <div class="section-header">
+      <div class="section-icon">👨‍👧‍👦</div>
+      <div>
+        <div class="section-title-ur">باپ کی جائیداد میں اولاد کا حصہ</div>
+        <div class="section-title-en">Children's Share in Father's Estate</div>
+      </div>
+    </div>
+    <div class="parchment">
+      <div class="intro-box">📌 پہلے: دادا/دادی کو <strong>١/٦</strong> اور بیوہ ماں کو <strong>١/٨</strong> نکالا جاۓ، پھر باقی اولاد میں تقسیم ہو۔</div>
+      <table class="inherit-table">
+        <thead><tr><th>اولاد کی صورت</th><th>اولاد کا حصہ</th><th>دیگر حصے</th></tr></thead>
+        <tbody>
+          <tr><td>لڑکے اور لڑکیاں دونوں ہوں</td><td><span class="badge b-double">لڑکا = ٢ × لڑکی</span></td><td>دادا/دادی ١/٦ · ماں ١/٨</td></tr>
+          <tr><td>صرف لڑکیاں — دو یا زائد</td><td><span class="badge b-two3">٢/٣</span></td><td>دادا/دادی ١/٦ · ماں ١/٨</td></tr>
+          <tr><td>صرف ایک لڑکی</td><td><span class="badge b-half">١/٢</span></td><td>دادا/دادی ١/٦ · ماں ١/٨</td></tr>
+        </tbody>
+      </table>
+      <div class="notes-title">⚠ Special Conditions</div>
+      <div class="note-item">دادا یا دادی تقسیم کے وقت زندہ نہ ہوں تو انکا حصہ نہیں نکالا جاۓ گا۔</div>
+      <div class="note-item">اگر کوئی بھائی تقسیم سے پہلے فوت ہوگیا اور اسکی بیوہ و بچے ہیں تو بھائی کا مکمل حصہ نکالا جاۓ گا۔</div>
+      <div class="note-item">اگر بہن تقسیم سے پہلے فوت ہوئی اور اسکے بچے ہیں تو بچوں کو حصہ ملے گا — لیکن بچے نہ ہوں تو شوہر کو نہیں ملے گا۔</div>
+    </div>
+  </div>
+
+  <!-- MOTHER ESTATE → CHILDREN -->
+  <div class="section-panel" id="mother">
+    <div class="section-header">
+      <div class="section-icon">👩‍👧‍👦</div>
+      <div>
+        <div class="section-title-ur">ماں کی جائیداد میں اولاد کا حصہ</div>
+        <div class="section-title-en">Children's Share in Mother's Estate</div>
+      </div>
+    </div>
+    <div class="parchment">
+      <div class="intro-box">📌 پہلے: نانا/نانی اور باپ کا حصہ نکالا جاۓ، پھر باقی اولاد میں تقسیم ہو۔</div>
+      <table class="inherit-table">
+        <thead><tr><th>اولاد کی صورت</th><th>اولاد کا حصہ</th><th>دیگر حصے</th></tr></thead>
+        <tbody>
+          <tr><td>لڑکے اور لڑکیاں دونوں ہوں</td><td><span class="badge b-double">لڑکا = ٢ × لڑکی</span></td><td>باپ ١/٤ · نانا/نانی کا حصہ</td></tr>
+          <tr><td>صرف لڑکیاں — دو یا زائد</td><td><span class="badge b-two3">٢/٣</span></td><td>باپ ١/٤ · باقی نانا/نانی</td></tr>
+          <tr><td>صرف ایک لڑکی</td><td><span class="badge b-half">١/٢</span></td><td>باپ ١/٤ · نانا/نانی ١/٦</td></tr>
+        </tbody>
+      </table>
+      <div class="notes-title">⚠ Special Conditions</div>
+      <div class="note-item">نانا/نانی تقسیم کے وقت زندہ نہ ہوں تو انکا حصہ نہیں نکالا جاۓ گا۔</div>
+      <div class="note-item">باپ زندہ نہ ہو تو باپ کا حصہ بھی نہیں نکلے گا — پوری جائیداد اولاد میں تقسیم ہوگی۔</div>
+      <div class="note-item">ماں کے پہلے شوہر سے اولاد ہے تو وہ بچے بھی برابر حصہ دار ہونگے۔</div>
+    </div>
+  </div>
+
+  <!-- SON ESTATE → PARENTS -->
+  <div class="section-panel" id="son">
+    <div class="section-header">
+      <div class="section-icon">👴</div>
+      <div>
+        <div class="section-title-ur">بیٹے کی جائیداد میں والدین کا حصہ</div>
+        <div class="section-title-en">Parents' Share in Son's Estate</div>
+      </div>
+    </div>
+    <div class="parchment">
+      <table class="inherit-table">
+        <thead><tr><th>صورتحال</th><th>والدین کا حصہ</th><th>دیگر حصے</th></tr></thead>
+        <tbody>
+          <tr><td>اولاد ہو</td><td><span class="badge b-sixth">١/٦ فی کس</span></td><td>دونوں ہوں تو ١/٦ برابر بانٹیں</td></tr>
+          <tr><td>اولاد نہیں، بیوہ ہے (دوسری شادی نہیں)</td><td><span class="badge b-rest">باقی جائیداد</span></td><td>بیوہ کو پہلے ١/٤</td></tr>
+          <tr><td>صرف لڑکیاں — دو یا زائد</td><td><span class="badge b-sixth">١/٦</span></td><td>لڑکیوں کو ٢/٣ · بیوہ کو ١/٨</td></tr>
+          <tr><td>صرف ایک لڑکی</td><td><span class="badge b-sixth">١/٦</span></td><td>لڑکی کو ١/٢ · بیوہ کو ١/٨</td></tr>
+          <tr><td>نہ اولاد، نہ بیوی</td><td><span class="badge b-special">ماں ١/٣ · باپ ٢/٣</span></td><td>بہن بھائی ہوں تو ماں کو ١/٦</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DAUGHTER ESTATE → PARENTS -->
+  <div class="section-panel" id="daughter">
+    <div class="section-header">
+      <div class="section-icon">👵</div>
+      <div>
+        <div class="section-title-ur">بیٹی کی جائیداد میں والدین کا حصہ</div>
+        <div class="section-title-en">Parents' Share in Daughter's Estate</div>
+      </div>
+    </div>
+    <div class="parchment">
+      <table class="inherit-table">
+        <thead><tr><th>صورتحال</th><th>والدین کا حصہ</th><th>دیگر حصے</th></tr></thead>
+        <tbody>
+          <tr><td>اولاد ہو</td><td><span class="badge b-sixth">١/٦ فی کس</span></td><td>دونوں ہوں تو ١/٦ برابر بانٹیں</td></tr>
+          <tr><td>اولاد نہیں، شوہر ہے</td><td><span class="badge b-half">١/٢</span></td><td>شوہر کو پہلے ١/٢</td></tr>
+          <tr><td>صرف لڑکیاں — دو یا زائد</td><td><span class="badge b-rest">باقی</span></td><td>شوہر کو ١/٤ · لڑکیوں کو ٢/٣</td></tr>
+          <tr><td>صرف ایک لڑکی</td><td><span class="badge b-sixth">١/٦</span></td><td>شوہر کو ١/٤ · لڑکی کو ١/٢</td></tr>
+          <tr><td>بیوہ، کوئی اولاد نہیں</td><td><span class="badge b-special">ماں ١/٣ · باپ باقی</span></td><td>بہن بھائی ہوں تو ماں کو ١/٦</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- KALALAH -->
+  <div class="section-panel" id="kalalah">
+    <div class="section-header">
+      <div class="section-icon">🔷</div>
+      <div>
+        <div class="section-title-ur">کلالہ — بلا براہ راست وارث</div>
+        <div class="section-title-en">Kalalah — No Direct Heirs</div>
+      </div>
+    </div>
+    <div class="parchment">
+      <div class="intro-box">📌 کلالہ: وہ مرد یا عورت جسکی نہ اولاد ہو، نہ والدین، نہ شوہر یا بیوی۔</div>
+
+      <div style="font-size:15px;font-weight:700;color:var(--ox-brown);margin:10px 0 6px;border-bottom:1px dashed var(--sand-dark);padding-bottom:4px;">
+        الف — سگے بہن بھائی نہ ہوں (سوتیلے ہوں)
+      </div>
+      <table class="inherit-table" style="margin-bottom:16px;">
+        <thead><tr><th>صورتحال</th><th>حصہ</th><th>باقی جائیداد</th></tr></thead>
+        <tbody>
+          <tr><td>ایک سوتیلا بھائی یا ایک بہن</td><td><span class="badge b-sixth">١/٦</span></td><td>قریبی ضرورت مند رشتہ داروں میں</td></tr>
+          <tr><td>سوتیلے بہن بھائی زیادہ ہوں</td><td><span class="badge b-third">١/٣ مشترک</span></td><td>قریبی ضرورت مند رشتہ داروں میں</td></tr>
+        </tbody>
+      </table>
+
+      <div style="font-size:15px;font-weight:700;color:var(--ox-brown);margin:10px 0 6px;border-bottom:1px dashed var(--sand-dark);padding-bottom:4px;">
+        ب — سگے بہن بھائی ہوں
+      </div>
+      <table class="inherit-table">
+        <thead><tr><th>صورتحال</th><th>حصہ</th><th>باقی</th></tr></thead>
+        <tbody>
+          <tr><td>ایک سگی بہن</td><td><span class="badge b-half">١/٢</span></td><td>قریبی ضرورت مند رشتہ دار</td></tr>
+          <tr><td>دو یا زائد سگی بہنیں</td><td><span class="badge b-two3">٢/٣ مشترک</span></td><td>قریبی ضرورت مند رشتہ دار</td></tr>
+          <tr><td>ایک سگا بھائی</td><td><span class="badge b-all">پوری جائیداد</span></td><td>—</td></tr>
+          <tr><td>بھائی اور بہنیں دونوں ہوں</td><td><span class="badge b-double">بھائی = ٢ × بہن</span></td><td>پوری جائیداد انہی میں</td></tr>
+        </tbody>
+      </table>
+      <div class="notes-title">⚠ Remaining Estate</div>
+      <div class="note-item">باقی جائیداد: دادا، دادی، نانا، نانی، چچا، تایا، پھوپھی، خالہ، ماموں یا انکی اولاد میں سے جو ضرورت مند ہوں — ایسے طریقے سے جو کسی کے لیے ضررساں نہ ہو۔</div>
+    </div>
+  </div>
+
+</div><!-- /content-area -->
+
+<!-- QURAN FOOTER -->
+<div class="quran-footer">
+  <div class="quran-card">
+    <div class="quran-label">THE DIVINE COMMAND</div>
+    <div class="quran-arabic">يُوصِيكُمُ اللَّهُ فِي أَوْلَادِكُمْ ۖ لِلذَّكَرِ مِثْلُ حَظِّ الْأُنثَيَيْنِ</div>
+    <div class="quran-ref">"Allah instructs you concerning your children…" — Surah An-Nisa (4:11)</div>
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(201,148,26,0.25);font-size:13px;color:var(--sand-mid);">
+      اللہ تمہارے لئے کھول کر بیان کرتا ہے تاکہ تم گمراہ نہ ہوجاؤ۔ &nbsp;·&nbsp; اللہ ہر شے کا جاننے والا ہے۔
+    </div>
+    <div style="margin-top:10px;font-size:13px;color:var(--gold);letter-spacing:1px;">آمین ۔ جزاک اللہ خیر 🍇🍒🍓</div>
+  </div>
+</div>
+
+<script>
+  function show(id, btn) {
+    document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+</script>
+</body>
+</html>
